@@ -30,6 +30,20 @@ public class Executioner {
     	}
     }
     
+    // Used to print secret word at end of game
+    public void revealWord() {
+    	System.out.println("Secret word was: " + mySecretWord);
+    }
+    
+    // Returns true only if given guess is in the secret word.
+    public boolean checkGuessInSecret (char guess, DisplayWord displayWord) {
+        if (letterInWord(guess)) {
+            displayWord.update(guess, mySecretWord);
+            return true;
+        }
+        return false;
+    }
+    
     //Constructor, only used in game startup
     public Executioner(int wordLength) {
     	mySecretWord = makeSecretWord(wordLength);

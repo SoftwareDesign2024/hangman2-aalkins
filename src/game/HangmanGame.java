@@ -45,7 +45,7 @@ public class HangmanGame {
         while (!gameOver) {
             gameOver = singleGuessMade(gameOver);
         }
-        System.out.println("The secret word was " + executioner.getSecretWord());
+        executioner.revealWord();
     }
 
 	public boolean singleGuessMade(boolean gameOver) {
@@ -53,16 +53,10 @@ public class HangmanGame {
 
 		String guess = guesser.guessEntry();
 		if (guess.length() == 1 && Character.isAlphabetic(guess.charAt(0))) {
-		    int indexOfGuess = guesser.makeGuess(guess.toLowerCase().charAt(0));
-		    //DEBUG
-		    
-		    System.out.println("Current Word: " + executioner.getSecretWord());
-		    
-		    
-		    if (! checkGuessInSecret(guess.charAt(0)) && indexOfGuess >= 0) {
+		    int indexOfGuess = guesser.makeGuess(guess.toLowerCase().charAt(0));    
+		    if (!executioner.checkGuessInSecret(guess.charAt(0), myDisplayWord) && indexOfGuess >= 0) {
 		           myNumGuessesLeft -= 1;
 		        }
-		    
 		    if (isGameLost()) {
 		        System.out.println("YOU ARE HUNG!!!");
 		        gameOver = true;
@@ -77,29 +71,6 @@ public class HangmanGame {
 		}
 		return gameOver;
 	}
-
-
-    // Process a guess by updating the necessary internal state.
-//    private void makeGuess (char guess) {
-//        // do not count repeated guess as a miss
-//        int index = myLettersLeftToGuess.indexOf("" + guess);
-//        if (index >= 0) {
-//            recordGuess(index);
-//            if (! checkGuessInSecret(guess)) {
-//                myNumGuessesLeft -= 1;
-//            }
-//        }
-//    }
-
-
-    // Returns true only if given guess is in the secret word.
-    private boolean checkGuessInSecret (char guess) {
-        if (executioner.letterInWord(guess)) {
-            myDisplayWord.update(guess, executioner.getSecretWord());
-            return true;
-        }
-        return false;
-    }
 
 
     // Returns true only if the guesser has guessed all letters in the secret word.
@@ -122,7 +93,7 @@ public class HangmanGame {
         System.out.println();
     }
     
-    //Used for extended functionalities
+    //Used for other functionalities functionalities
     
     public Guesser getGuesser() {
     	return guesser;
