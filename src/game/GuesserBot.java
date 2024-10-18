@@ -1,4 +1,5 @@
 package game;
+//Adam Alkins
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,23 +11,28 @@ import java.util.Set;
 import util.HangmanDictionary;
 
 public class GuesserBot extends Guesser{
-	
+
+	//FIELDS
 	private String dictionaryPath = "HangmanLabFiles/data/lowerwords.txt";
 	
 	private HangmanDictionary dictionary = new HangmanDictionary(dictionaryPath);
 	
 	private int wordLength;
-	
+
+
+	//Contains all possible words to be guessed
 	private ArrayList<String> possibleWords;
-	
+
+	//Keeps note of what letters have been guessed to be processed
 	private ArrayList<String> guessesMade = new ArrayList<String>();
-	
+
+	//Constructor
 	public GuesserBot(int wordLength) {
 		super();
-		this.wordLength = wordLength;
-		
+		this.wordLength = wordLength;	
 	}
 
+	//Finds most frequent letter in words left.
 	public String guessEntry(){
 		possibleWords = getPossibleWords();
 		String letterToGuess = findFrequentLetter();
@@ -34,7 +40,8 @@ public class GuesserBot extends Guesser{
 		return letterToGuess;
 		
 	}
-	
+
+	//Finds what words it could still be
 	public ArrayList<String> getPossibleWords(){
 		try {
 			FileInputStream io = new FileInputStream(dictionaryPath);
@@ -53,7 +60,8 @@ public class GuesserBot extends Guesser{
 		}
 		return null;
 	}
-	
+
+	//Uses list of all possible words to find most frequent letter.
 	public String findFrequentLetter() {
 		HashMap<String, Integer> freqMap = findLetterFrequencies();
 		freqMap = removeGuessesAlreadyMade(freqMap);
@@ -69,6 +77,7 @@ public class GuesserBot extends Guesser{
 		return mostFrequent;
 	}
 
+	// METHDOS BELOW COUNT HOW FREQUENT LETTERS ARE 
 	public HashMap<String,Integer> removeGuessesAlreadyMade(HashMap<String, Integer> freqMap) {
 		for (String guess : guessesMade) {
 			freqMap.remove(guess);
