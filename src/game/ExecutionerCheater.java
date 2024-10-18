@@ -1,4 +1,5 @@
 package game;
+//Adam Alkins
 
 import java.util.ArrayList;
 
@@ -16,13 +17,14 @@ public class ExecutionerCheater extends Executioner{
 	
 	private int guessesMade = 0;
 	
-	
+	//CONSTRUCTOR
 	public ExecutionerCheater(int wordLength){
 		super(wordLength);
 		this.wordLength = wordLength;
 		lettersGuessed = new ArrayList<>();
 	}
-	
+
+	//Takes the letters guessed by guesser and adds them to list know that it cannot pick words with those letters
 	public boolean letterInWord(char guess) {
 		guessesMade +=1;
 		lettersGuessed.add(guess);
@@ -37,10 +39,12 @@ public class ExecutionerCheater extends Executioner{
 		}
 		
 	}
-	
+
+	//Picks new word after a player guesses
 	public String pickNewWord(HangmanDictionary dictionary) {
 		String newWord = super.mySecretWord;
 		boolean wordWorks = false;
+		//Makes sure the game is still possible and doesn't break the logic/rules
 		while ((newWord.equals(super.mySecretWord) || !wordWorks) && guessesMade < 6) {
 			newWord = dictionary.getRandomWord(wordLength);
 			wordWorks = checkWordWorks(newWord);
@@ -48,7 +52,8 @@ public class ExecutionerCheater extends Executioner{
 		}
 		return newWord;
 	}
-	
+
+	//Checks new words to see if it has any letters that have alredy been guessed
 	public boolean checkWordWorks(String word) {
 		boolean works = true;
 		
